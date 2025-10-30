@@ -43,6 +43,9 @@ public class Teacher {
         List<String> problemsList = new ArrayList<>();
         System.out.println("请逐题输入题目 (格式: 数字 +/- 数字 = 答案)，输入 'Q' 退出：");
 
+        // 清除缓冲区中的换行符
+        scanner.nextLine();
+
         int problemNumber = 1;
         while (true) {
             System.out.print("请输入第" + problemNumber + "道题目:");
@@ -54,12 +57,16 @@ public class Teacher {
             }
 
             // 验证输入不为空
-            if (!input.isEmpty()) {
+            if (input.isEmpty()) {
+                System.out.println("题目不能为空，请重新输入。");
+                continue;
+            }
+
+            // 使用工具类验证题目
+            if (validateTeacherProblem(input)) {
                 problemsList.add(input);
                 problemNumber++;
                 System.out.println("题目已保存！");
-            } else {
-                System.out.println("题目不能为空，请重新输入。");
             }
         }
 
@@ -69,6 +76,23 @@ public class Teacher {
         // 转换为数组并返回
         return problemsList.toArray(new String[0]);
     }
+
+    /**
+     * 验证教师输入的题目
+     * @param problem 题目字符串
+     * @return 验证是否通过
+     */
+    private boolean validateTeacherProblem(String problem) {
+        try {
+            // 使用 Genertion_Tool 中的验证方法检查表达式
+            generator.Genertion_Tool.checkInvalidExpression(problem);
+            return true;
+        } catch (Exception e) {
+            System.out.println("题目验证失败: " + e.getMessage());
+            return false;
+        }
+    }
+
 
     /**
      * 获取教师自定义的题目

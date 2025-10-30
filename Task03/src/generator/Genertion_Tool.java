@@ -22,7 +22,7 @@ public class  Genertion_Tool {
         int a = getRandomNumber(min, max);
         // 确保不会出现负数且不超过范围
         int upperBound = Math.min(max - a, max);
-        int lowerBound = Math.max(min, 0); // 假设不允许负数参与运算
+        int lowerBound = min;
 
         if (lowerBound > upperBound) {
             lowerBound = upperBound; // 处理极端情况
@@ -36,7 +36,7 @@ public class  Genertion_Tool {
     public static String generateSubtraction(int min, int max) {
         int a = getRandomNumber(min, max);
         // 确保减数不大于被减数，防止结果为负数
-        int b = getRandomNumber(Math.max(0, min), a);
+        int b = getRandomNumber(min, a);
         return a + " - " + b + " = " + (a - b);
     }
 
